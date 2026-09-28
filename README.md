@@ -1,4 +1,4 @@
-# 🌍 ChronoGlobe — Time Zone Converter
+# 🌍 Timezone — Time Zone Converter
 
 A fast, free time zone converter. Pick two places and instantly see the time in both.
 
