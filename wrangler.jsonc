@@ -1,0 +1,45 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "chronoglobe",
+	"main": ".open-next/worker.js",
+	// nodejs_compat is required by the adapter. The date must be 2024-09-23 or
+	// later; it pins the Workers runtime behaviour so a future platform change
+	// cannot alter how this app runs.
+	"compatibility_date": "2026-09-01",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	// Everything in public/ plus the prerendered pages. Requests for these are
+	// served straight from Cloudflare's edge without invoking the Worker, which
+	// is why the 6 MB gazetteer costs nothing against the request budget.
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	// Holds rendered pages so ISR works.
+	//
+	// No "remote": true here on purpose. That flag points local development at
+	// this live namespace, which makes `next dev` and `next build` reach out to
+	// Cloudflare's API — and fail without network or credentials. Left off,
+	// local runs use a simulated KV in .wrangler/ and the deployed Worker still
+	// uses the real one. Deployed behaviour is identical either way.
+	"kv_namespaces": [
+		{
+			"binding": "NEXT_INC_CACHE_KV",
+			"id": "5883574f4ce240fd959413824e8c88e6"
+		}
+	],
+	// Canonical links, Open Graph tags and sitemap.xml need an absolute URL, and
+	// Cloudflare provides no equivalent of Vercel's VERCEL_PROJECT_PRODUCTION_URL.
+	// NEXT_PUBLIC_ means this is compiled in at BUILD time, so changing it here
+	// only takes effect on the next `npm run cf:deploy` — never on a live Worker.
+	// Point it at the custom domain once one is attached.
+	"vars": {
+		"NEXT_PUBLIC_SITE_URL": "https://chronoglobe.chronoglobe.workers.dev"
+	},
+
+	"observability": {
+		"enabled": true
+	}
+}
