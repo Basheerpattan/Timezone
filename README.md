@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌍 ChronoGlobe — Time Zone Converter
 
 Pick a **From** city and a **To** city, see the time in both. Built on **Next.js 16 (App
@@ -452,3 +453,7 @@ the cache to R2 — the swap is two lines, documented at the top of `open-next.c
 - **Any Node host** — `npm run build && npm start`, behind a reverse proxy on port 3000.
 - **GitHub Pages** — would need `output: 'export'`, which drops ISR; every pair page would
   have to be prebuilt and offsets would go stale between deploys. Not recommended here.
+=======
+# Timezone
+Fast time zone converter built with Next.js 16. Compare any two of 230,000+ cities live, or plan ahead with date and time. The plain-English search bar understands "3pm London in Tokyo", typos, time zone codes (PST, IST, CET), UTC offsets and multi-zone countries. Daylight saving is handled.
+>>>>>>> e22bf7631eaf1018862d985f1ccd5a6c14503e4a
